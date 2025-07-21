@@ -1,17 +1,231 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+        <div class="topbar fade-in">
+            <span class="leftside">
+                <button id="btnMenu" class="btn text-primary" href="javascript:void(0)" onclick="toggleMenu()">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <button id="btnMenuClose" style="display:none" class="btn text-danger" href="javascript:void(0)" onclick="$('.mobile-nav').toggleClass('open');$('#btnMenu').toggle();$('#btnMenuClose').toggle()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </span>
 
-        <article class="content px-4">
+            <span class="brand">PhilFood</span>
+
+            <span class="rightside">
+                <SectionOutlet SectionName="page-buttons" />
+                <span id="userControlBox">
+                    <button class="btn text-success">
+                        <i class="fa fa-user"></i>
+                    </button>
+                </span>
+            </span>
+        </div>
+        <NavMenu />
+        <article class="content px-4" onclick="hideMenu()" style="margin-top: 70px;">
             @Body
         </article>
     </main>
 </div>
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    .topbar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        padding: 0 16px;
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        z-index: 100;
+        background: linear-gradient(270deg, #ff5300, #ffb347, #ff9800, #ffb347);
+        background-size: 400% 400%;
+        animation: gradientShift 8s ease-in-out infinite;
+        opacity: 0;
+        transition: opacity 1.2s ease;
+        overflow: hidden; /* Ensure the pseudo-element stays within the topbar */
+    }
+
+        .topbar::after {
+            content: '';
+            position: absolute;
+            bottom: -20px; /* Adjust to control the curve depth */
+            left: 0;
+            width: 100%;
+            height: 40px; /* Adjust to control the curve height */
+            background: inherit; /* Use the same gradient as the topbar */
+            border-radius: 50%; /* Creates the convex curve */
+            z-index: -1; /* Ensure it stays behind the topbar */
+        }
+
+        .topbar.fade-in {
+            opacity: 1;
+        }
+
+        /* Optional: fade out class for programmatic use */
+        .topbar.fade-out {
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+    .topbar .brand {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.5rem;
+        font-weight: bold;
+        letter-spacing: 2px;
+        color: #fff;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    /* Hide on phone screens */
+    @@media (max-width: 768px) {
+        .topbar .brand {
+            display: none;
+        }
+    }
+
+    /* Visible on tablets and PCs */
+    @@media (min-width: 769px) {
+        .topbar .brand {
+            display: block;
+        }
+    }
+
+    @@keyframes gradientShift {
+        0%
+    {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+    }
+
+    .topbar .leftside,
+    .topbar .rightside {
+        display: flex;
+        align-items: center;
+        min-width: 80px;
+    }
+
+    .topbar .brand {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.5rem;
+        font-weight: bold;
+        letter-spacing: 2px;
+        color: #fff;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .topbar .leftside {
+        justify-content: flex-start;
+    }
+
+    .topbar .rightside {
+        justify-content: flex-end;
+    }
+
+    body {
+        font-family: 'Roboto', sans-serif; /* Default font for body text */
+        
+    }
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Poppins', serif; /* Elegant serif font for headings */
+        color: #FF5300; /* Accent color for headings */
+    }
+
+    /* Buttons and Links */
+    button, a {
+        font-family: 'Roboto', sans-serif; /* Keep buttons and links clean and modern */
+        font-weight: 500; /* Slightly bold for emphasis */
+    }
+    button.primary {
+        background-color: #FF5300;
+        color: #121212;
+    }
+
+    button.secondary {
+        background-color: #00ADB5;
+        color: #121212;
+    }
+
+    .card {
+        background-color: #1E1E1E;
+        border: 1px solid #B0B0B0;
+    }
+    /* Scrollbar styling */
+    body {
+        scrollbar-color: #FFFFFF #ffffff; /* Thumb color and track color */
+        scrollbar-width: thin; /* For Firefox */
+    }
+
+    /* For WebKit browsers (Chrome, Edge, Safari) */
+    ::-webkit-scrollbar {
+        width: 8px; /* Width of the vertical scrollbar */
+        height: 8px; /* Height of the horizontal scrollbar */
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #ffffff; /* Matches the off-black background */
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #FFFFFF; /* Matches the primary accent color */
+        border-radius: 4px; /* Rounded corners for the thumb */
+    }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFFFFF; /* Slightly lighter orange for hover effect */
+        }
+</style>
+<script>
+    // Fade in on load
+    document.addEventListener('DOMContentLoaded', function () {
+        var topbar = document.querySelector('.topbar');
+        if (topbar) {
+            topbar.classList.add('fade-in');
+        }
+    });
+
+    // Example: To fade out programmatically, call this function
+    function fadeOutTopbar() {
+        var topbar = document.querySelector('.topbar');
+        if (topbar) {
+            topbar.classList.remove('fade-in');
+            topbar.classList.add('fade-out');
+        }
+    }
+
+    function toggleMenu() {
+        $('.mobile-nav').toggleClass('open');
+        $('#btnMenu').toggle();
+        $('#btnMenuClose').toggle();
+    }
+
+    function showMenu() {
+        $('.mobile-nav').addClass('open');
+        $('#btnMenu').hide();
+        $('#btnMenuClose').show();
+    }
+
+    function hideMenu() {
+        $('.mobile-nav').removeClass('open');
+        $('#btnMenu').show();
+        $('#btnMenuClose').hide();
+    }
+</script>
