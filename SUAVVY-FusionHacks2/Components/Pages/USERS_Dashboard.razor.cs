@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SUAVVY_FusionHacks2.Components.Pages
 {
-    public partial class Home : ComponentBase
+    public partial class USERS_Dashboard : ComponentBase
     {
         [Inject]
         public AppShellContext AppShell { get; set; }
