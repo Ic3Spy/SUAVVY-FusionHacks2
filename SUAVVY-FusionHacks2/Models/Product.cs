@@ -8,7 +8,7 @@ namespace SUAVVY_FusionHacks2.Models
 {
     public class Product
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Recipe { get; set; }
         public double Price { get; set; }
         public string ImageUrl { get; set; }

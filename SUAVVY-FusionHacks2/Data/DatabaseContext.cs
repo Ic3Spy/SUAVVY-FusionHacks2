@@ -37,6 +37,7 @@ namespace SUAVVY_FusionHacks2.Data
             await database.CreateTableAsync<Recipe>();
             await database.CreateTableAsync<RecipeIngredient>();
             await database.CreateTableAsync<CookingStep>();
+            await database.CreateTableAsync<Product>();
         }
 
         #region Users
@@ -127,6 +128,29 @@ namespace SUAVVY_FusionHacks2.Data
         }
 
         public async Task<int> DeleteCookingStep(CookingStep incoming)
+        {
+            await Init();
+            return await database.DeleteAsync(incoming);
+        }
+        #endregion
+
+        #region Products
+        public async Task<List<Product>> Products()
+        {
+            await Init();
+            return await database.Table<Product>().ToListAsync();
+        }
+
+        public async Task<int> SaveProduct(Product incoming)
+        {
+            await Init();
+            if (incoming.ID != 0)
+                return await database.UpdateAsync(incoming);//update existing
+            else
+                return await database.InsertAsync(incoming);//insert new
+        }
+
+        public async Task<int> DeleteProduct(Product incoming)
         {
             await Init();
             return await database.DeleteAsync(incoming);

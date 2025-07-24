@@ -24,26 +24,7 @@
         }
     }
     <ul>
-        <li>
-            <a class="nav-link" href="">
-                <i class="fa fa-home"></i>&nbsp;Home
-            </a>
-        </li>
-        <li>
-            <a class="nav-link" href="userrecipe">
-                <i class="fa fa-store"></i>&nbsp;Browse Recipes
-            </a>
-        </li>
-        <li>
-            <a class="nav-link" href="mycart">
-                <i class="fa fa-shopping-cart"></i>&nbsp;My Categories
-            </a>
-        </li>
-        <li>
-            <a class="nav-link" href="myfavorites">
-                <i class="fa fa-truck"></i>&nbsp;My Favorites
-            </a>
-        </li>
+        
     </ul>
     <hr />
     @if (AppShell.IsUserLoggedIn)
@@ -76,7 +57,7 @@
                 </a>
             </li>
             <li>
-                <a class="nav-link" href="login">
+                <a class="nav-link" href="">
                     <i class="fa fa-sign-in-alt"></i>&nbsp;Login
                 </a>
             </li>
@@ -100,6 +81,6 @@
         AppShell.CurrentUser = null;
         AppShell.IsUserLoggedIn = false;
         await InvokeAsync(StateHasChanged);
-        Nav.NavigateTo($"/login?returnto=home");
+        Nav.NavigateTo($"/?returnto=home");
     }
 }

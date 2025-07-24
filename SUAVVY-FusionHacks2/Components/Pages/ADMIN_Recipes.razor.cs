@@ -36,33 +36,6 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             return await DB.Recipes();
         }
 
-        public async void SaveRecipe()
-        {
-            if (string.IsNullOrWhiteSpace(Model.SelectedRecipe.Name))
-            {
-                Model.Status = "danger";
-                Model.StatusMessage = "Recipename cannot be blank or only spaces!";
-            }
-            else if (
-                Model.Recipes.Select(r => r.Name).ToList().Contains(Model.SelectedRecipe.Name)
-                &&
-                Model.IsNew)
-            {
-                Model.Status = "danger";
-                Model.StatusMessage = "Recipe already exists!";
-            }
-            else
-            {
-                //Model.SelectedRecipe.SKU = string.IsNullOrWhiteSpace(Model.SelectedRecipe.SKU) ? DateTime.Now.Ticks.ToString() : Model.SelectedRecipe.SKU;
-                await DB.SaveRecipe(Model.SelectedRecipe);
-                Model.ShowForm = false;
-                Model.Status = "success";
-                Model.StatusMessage = "Recipe changes has been saved successfully!";
-                Model.Recipes = await GetRecipes();
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
         public async void LoadRecipe(int RecipeID)
         {
             Nav.NavigateTo("/ADMIN_RecipeEditor?recipeid=" + RecipeID);
@@ -119,7 +92,6 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             }
             return resp;
         }
-
         public async void SearchTerm(ChangeEventArgs e)
         {
             var items = await GetRecipes();
@@ -139,19 +111,6 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             }
 
             await InvokeAsync(StateHasChanged);//refresh rendered page
-        }
-
-        public async void AddRecipePhoto(int RecipeID)
-        {
-            string folderPath = Path.Combine(FileSystem.AppDataDirectory, "RecipePhotos");
-            string retFile = await DeviceUtilities.AddPhoto(folderPath, $"{RecipeID}.jpg");
-
-            if (!string.IsNullOrWhiteSpace(retFile))
-            {
-                string filenameOnly = Path.GetFileName(retFile);
-                //Model.LoadedPhotoPath = $"/RecipePhotos/{filenameOnly}";
-                await InvokeAsync(StateHasChanged);//refresh rendered page
-            }
         }
         public async void ShowList()
         {

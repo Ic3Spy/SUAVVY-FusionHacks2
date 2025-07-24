@@ -9,6 +9,7 @@ namespace SUAVVY_FusionHacks2.Models
     public class ProductViewModel : BaseViewModel
     {
         public bool SelectMode { get; set; } = false;
+        public bool IsGrid { get; set; } = false;
         /// <summary>
         /// List of Products
         /// </summary>
@@ -17,5 +18,6 @@ namespace SUAVVY_FusionHacks2.Models
         /// Selected Product for editing or viewing details
         /// </summary>
         public Product SelectedProduct { get; set; } = new Product();
+        public string LoadedPhoto { get; set; }
     }
 }

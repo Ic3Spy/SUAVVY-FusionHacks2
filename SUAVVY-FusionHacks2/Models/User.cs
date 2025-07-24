@@ -28,6 +28,8 @@ namespace SUAVVY_FusionHacks2.Models
 
         public string MobileNumber { get; set; }
 
+        public string Role { get; set; }
+
         public string Photo { get; set; }
 
         [NotNull]

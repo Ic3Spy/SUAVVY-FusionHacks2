@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using SUAVVY_FusionHacks2.Data;
 
 namespace SUAVVY_FusionHacks2
 {
@@ -20,7 +21,8 @@ namespace SUAVVY_FusionHacks2
     		builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
-
+            builder.Services.AddSingleton<AppShellContext>();
+            builder.Services.AddSingleton<DatabaseContext>();
             return builder.Build();
         }
     }

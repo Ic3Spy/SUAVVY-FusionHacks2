@@ -39,6 +39,54 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
     </PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
+		<ApplicationTitle>SUAVVY</ApplicationTitle>
+		<ApplicationId>com.companyname.prefinalmobsys1.myrecipes</ApplicationId>
+		<ApplicationIdGuid>87f4d512-0f74-43cc-9e3c-e7eb8961df03</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+		<ApplicationTitle>SUAVVY</ApplicationTitle>
+		<ApplicationId>com.companyname.prefinalmobsys1.myrecipes</ApplicationId>
+		<ApplicationIdGuid>87f4d512-0f74-43cc-9e3c-e7eb8961df03</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
+		<ApplicationTitle>SUAVVY</ApplicationTitle>
+		<ApplicationId>com.companyname.prefinalmobsys1.myrecipes</ApplicationId>
+		<ApplicationIdGuid>87f4d512-0f74-43cc-9e3c-e7eb8961df03</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
+		<ApplicationTitle>SUAVVY</ApplicationTitle>
+		<ApplicationId>com.companyname.prefinalmobsys1.myrecipes</ApplicationId>
+		<ApplicationIdGuid>87f4d512-0f74-43cc-9e3c-e7eb8961df03</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
+		<ApplicationTitle>SUAVVY</ApplicationTitle>
+		<ApplicationId>com.companyname.prefinalmobsys1.myrecipes</ApplicationId>
+		<ApplicationIdGuid>87f4d512-0f74-43cc-9e3c-e7eb8961df03</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+		<ApplicationTitle>SUAVVY</ApplicationTitle>
+		<ApplicationId>com.companyname.prefinalmobsys1.myrecipes</ApplicationId>
+		<ApplicationIdGuid>87f4d512-0f74-43cc-9e3c-e7eb8961df03</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+		<ApplicationTitle>SUAVVY</ApplicationTitle>
+		<ApplicationId>com.companyname.prefinalmobsys1.myrecipes</ApplicationId>
+		<ApplicationIdGuid>87f4d512-0f74-43cc-9e3c-e7eb8961df03</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
+		<ApplicationTitle>SUAVVY</ApplicationTitle>
+		<ApplicationId>com.companyname.prefinalmobsys1.myrecipes</ApplicationId>
+		<ApplicationIdGuid>87f4d512-0f74-43cc-9e3c-e7eb8961df03</ApplicationIdGuid>
+	</PropertyGroup>
+	
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
