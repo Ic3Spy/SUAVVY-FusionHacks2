@@ -14,7 +14,7 @@ namespace SUAVVY_FusionHacks2.Data
         /// <summary>
         /// Name for the SQLite DB created in the device
         /// </summary>
-        public const string DatabaseFilename = "suavvy-2k25fusionhacks2.db";
+        public const string DatabaseFilename = "suavvy-fusionhacks2.db";
 
 
         /// <summary>

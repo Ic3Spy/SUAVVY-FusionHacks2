@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SUAVVY_FusionHacks2.Components.Pages
 {
-    public partial class USERS_Cart : ComponentBase
+    public partial class ADMIN_CartView : ComponentBase
     {
         [Inject]
         public AppShellContext AppShell { get; set; }
@@ -20,20 +20,39 @@ namespace SUAVVY_FusionHacks2.Components.Pages
         [Inject]
         public DatabaseContext DB { get; set; }
 
+        [Parameter]
+        [SupplyParameterFromQuery]
+        public int? cartid { get; set; }
         public CartViewModel Model { get; set; }
 
         public const double DeliveryFee = 10.00;
         /// <summary>
         /// This will be called on load or start of a page
         /// </summary>
+        /// 
+        public async Task<List<CartItem>> GetCartItems()
+        {
+            return await DB.CartItems();
+        }
         protected override async void OnInitialized()
         {
             Model = new CartViewModel();
             Model.Items4Checkout = new List<CartItemViewModel>();
+            Model.IsNew = !cartid.HasValue;
 
-            if (AppShell.CurrentUser != null)
+            if (cartid != null)
             {
-                int userID = AppShell.CurrentUser.ID;
+                await LoadCartItems(cartid.Value);
+            }
+
+            await InvokeAsync(StateHasChanged);//refresh rendered page
+        }
+        public async Task LoadCartItems(int cartid)
+        {
+            
+            if (cartid != null)
+            {
+                
                 List<Cart> orders = await DB.Carts();
                 List<CartItem> orderedItems = await DB.CartItems();
                 List<Product> allproducts = await DB.Products();
@@ -41,7 +60,7 @@ namespace SUAVVY_FusionHacks2.Components.Pages
                 if (orders != null)
                 {
                     order = (from r in orders
-                             where r.UserID == userID
+                             where r.ID == cartid
                              && !r.IsPaid
                              && !r.IsCompleted
                              select r
@@ -50,7 +69,7 @@ namespace SUAVVY_FusionHacks2.Components.Pages
                     {
                         Model.Order = order;
                         var ordereditems = (from r in orderedItems
-                                            where r.CartID == order.ID
+                                            where r.CartID == cartid
                                             select r).ToList();
                         foreach (var row in ordereditems)
                         {

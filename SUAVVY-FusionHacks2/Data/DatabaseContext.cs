@@ -38,6 +38,9 @@ namespace SUAVVY_FusionHacks2.Data
             await database.CreateTableAsync<RecipeIngredient>();
             await database.CreateTableAsync<CookingStep>();
             await database.CreateTableAsync<Product>();
+            await database.CreateTableAsync<Cart>();
+            await database.CreateTableAsync<CartItem>();
+
         }
 
         #region Users

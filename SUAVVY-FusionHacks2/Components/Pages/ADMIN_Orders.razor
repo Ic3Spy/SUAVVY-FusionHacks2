@@ -1,5 +1,27 @@
-﻿<h3>ADMIN_Orders</h3>
+﻿@page "/ADMIN_Orders"
+<h3>ADMIN_Orders</h3>
 
-@code {
-
-}
+<div class="itemsList">
+    <ul>
+        @foreach (var prod in Model.Orders)
+        {
+            <li data-id="@prod.UserID" data-username="@prod.UserID" @onclick="() => { LoadCart(prod.ID); }" class="text-success">
+                <div class="leftindicator">
+                    @* <i class="fa @(GetIconFromCategory(prod.Category))"></i> *@
+                    &nbsp
+                </div>
+                <div class="centerdetails">
+                    <h5>
+                        Order ID: @prod.ID
+                    </h5>
+                        User ID: <p>@prod.UserID</p>
+                </div>
+                <div class="rightaction">
+                    <button class="btn text-secondary" @onclick="() => { LoadCart(prod.ID); }">
+                        <i class="fa fa-caret-right"></i>
+                    </button>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

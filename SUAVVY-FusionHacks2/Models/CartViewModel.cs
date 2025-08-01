@@ -9,7 +9,8 @@ namespace SUAVVY_FusionHacks2.Models
     public class CartViewModel : BaseViewModel
     {
         public double FullPrice { get; set; }
-        public Cart Order { get; set; }
+        public Cart Order { get; set; } = new Cart();
+        public List<Cart> Orders {  get; set; } = new List<Cart>();           
         public List<CartItemViewModel> Items4Checkout { get; set; } = new List<CartItemViewModel>();
     }
 
