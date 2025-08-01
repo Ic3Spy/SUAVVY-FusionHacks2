@@ -8,26 +8,29 @@ namespace SUAVVY_FusionHacks2.Models
 {
     public class CartViewModel : BaseViewModel
     {
-        public bool SelectMode { get; set; } = false;
-        public Cart SelectedCart { get; set; }
-        public List<Cart> Carts { get; set; }
-        public List<Cart> UserCarts { get; set; }
-        public List<Product> CartItems { get; set; }
-        public Product CartItem { get; set; }
-        public CartViewModel()
-        {
-            Carts = new List<Cart>();
-            CartItems = new List<Product>();
-            CartItem = new Product();
-            SelectedCart = new Cart();
-            SelectMode = false;
-        }
-        public void ClearCart()
-        {
-            SelectedCart = new Cart();
-            Carts.Clear();
-            Status = "success";
-            StatusMessage = "Cart has been cleared successfully!";
-        }
+        public double FullPrice { get; set; }
+        public Cart Order { get; set; }
+        public List<CartItemViewModel> Items4Checkout { get; set; } = new List<CartItemViewModel>();
+    }
+
+    public class CartItemViewModel : Product
+    {
+        public int Quantity { get; set; }
+
+        public int CartID { get; set; }
+
+        //public int ProductID { get; set; }
+        //public string ProductName { get; set; }
+        //public string ProductCategory { get; set; }
+        //public string ProductDescription { get; set; }
+        //public double ProductPrice { get; set; }
+        //public string ProductSKU { get; set; }
+        //public bool ProductIsActive { get; set; }
+
+        //public bool IsDeleted { get; set; }
+        //public string CreatedBy { get; set; }
+        //public string ModifiedBy { get; set; }
+        //public DateTime CreatedDate { get; set; }
+        //public DateTime ModifiedDate { get; set; }
     }
 }

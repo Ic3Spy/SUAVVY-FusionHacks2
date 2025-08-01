@@ -31,7 +31,6 @@ namespace SUAVVY_FusionHacks2.Components.Pages
         {
             Model = new ProductViewModel();
             RecipeModel = new RecipesViewModel();
-
             Model.IsNew = !productid.HasValue;
             RecipeModel.Recipes = await GetRecipes();
 
@@ -45,7 +44,7 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             {
                 if (productid != null)
                 {
-                    await LoadRecipe(productid.Value);
+                    await LoadProduct(productid.Value);
                 }
             }
 
@@ -56,7 +55,10 @@ namespace SUAVVY_FusionHacks2.Components.Pages
         {
             return await DB.Recipes();
         }
-
+        public async Task<List<Models.Product>> GetProducts()
+        {
+            return await DB.Products();
+        }
         public async void AddRecipePhoto(int RecipeID)
         {
             string folderPath = Path.Combine(FileSystem.AppDataDirectory, "ProductPhotos");
@@ -70,9 +72,9 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             }
         }
 
-        public async void SaveRecipe()
+        public async void SaveProduct()
         {
-            var allrecipes = await DB.Recipes();
+            var allproducts = await DB.Products();
 
             if (string.IsNullOrWhiteSpace(Model.SelectedProduct.Recipe))
             {
@@ -80,7 +82,7 @@ namespace SUAVVY_FusionHacks2.Components.Pages
                 Model.StatusMessage = "Recipe name cannot be blank or only spaces!";
             }
             else if (
-                allrecipes.Select(r => r.Name).ToList().Contains(Model.SelectedProduct.Recipe)
+                allproducts.Select(r => r.Recipe).ToList().Contains(Model.SelectedProduct.Recipe)
                 &&
                 Model.IsNew)
             {
@@ -91,60 +93,60 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             {
                 //Set loading gif to not locked image
                 Model.LoadedPhoto = $"/imgs/loading.gif";
+                //var tes1 = Model.SelectedProduct.ID;
                 await DB.SaveProduct(Model.SelectedProduct);
 
                 //Post Changes
                 //Get the stored ID after saving a new record
                 allproducts = await DB.Products();
-                var storedRec = (from rw in allrecipes where rw.Name == Model.SelectedProduct.Name select rw).FirstOrDefault();
-                string tempImage = $"{FileSystem.AppDataDirectory}/RecipePhotos/temp.jpg";
+                var storedRec = (from rw in allproducts where rw.ID == Model.SelectedProduct.ID select rw).FirstOrDefault();
+                string tempImage = $"{FileSystem.AppDataDirectory}/ProductPhotos/temp.jpg";
                 if (File.Exists(tempImage) && storedRec != null)
                 {
-                    string targetImage = $"{FileSystem.AppDataDirectory}/RecipePhotos/{storedRec.ID}.jpg";
+                    string targetImage = $"{FileSystem.AppDataDirectory}/ProductPhotos/{storedRec.ID}.jpg";
                     File.Copy(tempImage, targetImage, overwrite: true);
-                    Model.LoadedPhoto = $"/RecipePhotos/{storedRec.ID}.jpg";
+                    Model.LoadedPhoto = $"/ProductPhotos/{storedRec.ID}.jpg";
                     //await InvokeAsync(StateHasChanged);
                     // Enclose with Try just incase File is not deletable at the moment
                     try { File.Delete(tempImage); } catch (Exception err) { }
-
-                    Model.LoadedPhoto = $"/RecipePhotos/{storedRec.ID}.jpg";
-                    Model.SelectedProduct.Photo = Model.LoadedPhoto;
+                    //var test = Model.SelectedProduct.ID;
+                    Model.LoadedPhoto = $"/ProductPhotos/{storedRec.ID}.jpg";
+                    
+                    Model.SelectedProduct.ImageUrl = Model.LoadedPhoto;
                     Model.Status = "success";
                     Model.StatusMessage = "Recipe changes has been saved successfully!";
                     await Task.Delay(1000);
-                    await DB.SaveRecipe(Model.SelectedProduct);
-                    Model.Ingredients = await GetIngredients();
-                    Model.CookingSteps = await GetSteps();
+                    await DB.SaveProduct(Model.SelectedProduct);
+                    RecipeModel.Recipes = await DB.Recipes();
                 }
             }
             await InvokeAsync(StateHasChanged);
         }
 
-        public async Task LoadRecipe(int RecipeID)
+        public async Task LoadProduct(int ProductID)
         {
-            var allrecipes = await DB.Recipes();
-            var allingredients = await DB.RecipeIngredients();
-            var allsteps = await DB.CookingSteps();
-            Model.SelectedProduct = (from row in allrecipes where row.ID == RecipeID select row).FirstOrDefault();
-            Model.Ingredients = (from row in allingredients where row.RecipeID == RecipeID select row).ToList();
-            Model.CookingSteps = (from row in allsteps where row.StepId == RecipeID select row).ToList();
-            Model.LoadedPhoto = $"/RecipePhotos/{RecipeID}.jpg";
+            var allproducts = await DB.Products();
+            var allrecipes = await GetRecipes();
+            Model.SelectedProduct = (from row in allproducts where row.ID == ProductID select row).FirstOrDefault();
+            RecipeModel.Recipes = (from row in allrecipes select row).ToList();
+            
+            Model.LoadedPhoto = $"/ProductPhotos/{ProductID}.jpg";
             if (Model.SelectedProduct == null)
             {
-                Model.SelectedProduct = new Recipe();
+                Model.SelectedProduct = new Product();
             }
 
             await InvokeAsync(StateHasChanged);//refresh rendered page
         }
 
-        public async void DeleteRecipe(int Recipeid)
+        public async void DeleteRecipe(int ProductID)
         {
-            var selRecipe = (from row in Model.Recipes where row.ID == Recipeid select row).FirstOrDefault();
-            if (selRecipe != null)
+            var selProduct= (from row in Model.Products where row.ID == ProductID select row).FirstOrDefault();
+            if (selProduct != null)
             {
-                await DB.DeleteRecipe(selRecipe);
+                await DB.DeleteProduct(selProduct);
                 Model.Status = "success";
-                Model.StatusMessage = "Recipe has been deleted successfully!";
+                Model.StatusMessage = "Product has been deleted successfully!";
                 //Model.Recipes = await GetRecipes();
                 await InvokeAsync(StateHasChanged);
             }

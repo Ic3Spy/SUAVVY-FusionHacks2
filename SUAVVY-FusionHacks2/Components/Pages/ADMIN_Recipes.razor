@@ -14,29 +14,29 @@
         <span class="input-group-text" onclick="hideSearchBox()"><i class="fa fa-times"></i></span>
     </div>
     <span id="controlBox">
-    @if (!Model.ShowForm)
-    {
-        <button class="btn text-primary" @onclick="AddRecipe" title="Add user">
-            <i class="fa fa-plus"></i>
-        </button>
-        <button class="btn text-warning" onclick="showSearchBox()">
-            <i class="fa fa-search"></i>
-        </button>
-        @if(!Model.IsGrid)
+        @if (!Model.ShowForm)
         {
-            <button class="btn text-secondary" @onclick="ShowGrid" title="Switch to Grid View">
-                <i class="fa fa-th"></i>
+            <button class="btn text-primary" @onclick="AddRecipe" title="Add user">
+                <i class="fa fa-plus"></i>
             </button>
-        }
-        else
-        {
-            <button class="btn text-secondary" @onclick="ShowList" title="Switch to List View">
-                <i class="fa fa-list"></i>
+            <button class="btn text-warning" onclick="showSearchBox()">
+                <i class="fa fa-search"></i>
             </button>
+            @if (!Model.IsGrid)
+            {
+                <button class="btn text-secondary" @onclick="ShowGrid" title="Switch to Grid View">
+                    <i class="fa fa-th"></i>
+                </button>
+            }
+            else
+            {
+                <button class="btn text-secondary" @onclick="ShowList" title="Switch to List View">
+                    <i class="fa fa-list"></i>
+                </button>
+            }
         }
-    }
     </span>
-    
+
 </SectionContent>
 @if (!Model.IsGrid)
 {
@@ -44,7 +44,7 @@
         <ul>
             @foreach (var prod in Model.Recipes)
             {
-                <li data-id="@prod.ID" data-username="@prod.Name" @onclick="()=>{ LoadRecipe(prod.ID); }" class="text-success">
+                <li data-id="@prod.ID" data-username="@prod.Name" @onclick="() => { LoadRecipe(prod.ID); }" class="text-success">
                     <div class="leftindicator">
                         @* <i class="fa @(GetIconFromCategory(prod.Category))"></i> *@
                         &nbsp
@@ -56,11 +56,11 @@
                         <p>@prod.Description</p>
                     </div>
                     <div class="rightaction">
-                        <button class="btn text-secondary" @onclick="()=>{ LoadRecipe(prod.ID); }">
+                        <button class="btn text-secondary" @onclick="() => { LoadRecipe(prod.ID); }">
                             <i class="fa fa-caret-right"></i>
                         </button>
                     </div>
-                    <button style="display:none" class="btn btn-outline-danger" @onclick="()=>{ DeleteRecipe(prod.ID); }"><i class="fa fa-times"></i></button>
+                    <button style="display:none" class="btn btn-outline-danger" @onclick="() => { DeleteRecipe(prod.ID); }"><i class="fa fa-times"></i></button>
                 </li>
             }
         </ul>

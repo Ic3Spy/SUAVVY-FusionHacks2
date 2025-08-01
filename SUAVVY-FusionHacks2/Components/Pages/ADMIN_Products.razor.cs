@@ -83,7 +83,7 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             {
                 await DB.DeleteProduct(selProduct);
                 Model.Status = "success";
-                Model.StatusMessage = "Recipe has been deleted successfully!";
+                Model.StatusMessage = "Product has been deleted successfully!";
                 Model.Products = await GetProducts();
                 await InvokeAsync(StateHasChanged);
             }
@@ -95,13 +95,13 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             Model.SelectedProduct = new Models.Product();
             Model.IsNew = true;
             //ShowRecipeForm();
-            Nav.NavigateTo("/ADMIN_RecipeEditor?IsNew=true");
+            Nav.NavigateTo("/ADMIN_ProductEditor?IsNew=true");
         }
 
         public void ShowRecipeForm()
         {
             //Model.ShowForm = true;
-            Nav.NavigateTo("/ADMIN_RecipeEditor");
+            Nav.NavigateTo("/ADMIN_ProductEditor");
         }
 
         public string GetIconFromCategory(string cat)

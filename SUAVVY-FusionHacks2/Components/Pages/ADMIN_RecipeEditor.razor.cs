@@ -41,8 +41,9 @@ namespace SUAVVY_FusionHacks2.Components.Pages
                 //loader
                 var allingredients = await DB.RecipeIngredients();
                 var allsteps = await DB.CookingSteps();
-                Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.ID select row).ToList();
-                Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.ID select row).ToList();
+                Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.SKU select row).ToList();
+                Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.SKU select row).ToList();
+                Model.SelectedRecipe.SKU = "RECIPE-" + DateTime.Now.ToString("yyyyMMddHHmmss");
             }
             else
             {
@@ -82,7 +83,24 @@ namespace SUAVVY_FusionHacks2.Components.Pages
                 //UI to remove to cart
             }
         }
-
+        public async void ReturnToRecipes(int Recipeid)
+        {
+            var selRecipe = (from row in Model.Recipes where row.ID == Recipeid select row).FirstOrDefault();
+            var selIngredient = (from row in Model.Ingredients where row.RecipeID == Model.SelectedRecipe.SKU select row).FirstOrDefault();
+            var selStep = (from row in Model.CookingSteps where row.StepId == Model.SelectedRecipe.SKU select row).FirstOrDefault();
+            if (Model.SelectedRecipe.ID == null)
+            {
+                foreach (var ingredient in Model.Ingredients)
+                {
+                    await DB.DeleteRecipeIngredient(ingredient);
+                }
+                foreach (var step in Model.CookingSteps)
+                {
+                    await DB.DeleteCookingStep(step);
+                }
+            }
+            Nav.NavigateTo("/ADMIN_Recipes");
+        }
         public async void AddRecipePhoto(int RecipeID)
         {
             string folderPath = Path.Combine(FileSystem.AppDataDirectory, "RecipePhotos");
@@ -145,6 +163,7 @@ namespace SUAVVY_FusionHacks2.Components.Pages
 
                     Model.LoadedPhoto = $"/RecipePhotos/{storedRec.ID}.jpg";
                     Model.SelectedRecipe.Photo = Model.LoadedPhoto;
+                    storedRec.Photo = Model.LoadedPhoto;
                     Model.Status = "success";
                     Model.StatusMessage = "Recipe changes has been saved successfully!";
                     await Task.Delay(1000);
@@ -163,8 +182,8 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             var allingredients = await DB.RecipeIngredients();
             var allsteps = await DB.CookingSteps();
             Model.SelectedRecipe = (from row in allrecipes where row.ID == RecipeID select row).FirstOrDefault();
-            Model.Ingredients = (from row in allingredients where row.RecipeID == RecipeID select row).ToList();
-            Model.CookingSteps = (from row in allsteps where row.StepId == RecipeID select row).ToList();
+            Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.SKU select row).ToList();
+            Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.SKU select row).ToList();
             Model.LoadedPhoto = $"/RecipePhotos/{RecipeID}.jpg";
             if (Model.SelectedRecipe == null)
             {
@@ -177,19 +196,29 @@ namespace SUAVVY_FusionHacks2.Components.Pages
         public async void DeleteRecipe(int Recipeid)
         {
             var selRecipe = (from row in Model.Recipes where row.ID == Recipeid select row).FirstOrDefault();
+            var selIngredient = (from row in Model.Ingredients where row.RecipeID == Model.SelectedRecipe.SKU select row).FirstOrDefault();
+            var selStep = (from row in Model.CookingSteps where row.StepId == Model.SelectedRecipe.SKU select row).FirstOrDefault();
             if (selRecipe != null)
             {
                 await DB.DeleteRecipe(selRecipe);
+                await DB.DeleteRecipeIngredient(selIngredient);
+                await DB.DeleteCookingStep(selStep);
                 Model.Status = "success";
                 Model.StatusMessage = "Recipe has been deleted successfully!";
                 //Model.Recipes = await GetRecipes();
                 await InvokeAsync(StateHasChanged);
             }
+            else
+            {
+                await DB.DeleteRecipeIngredient(selIngredient);
+                await DB.DeleteCookingStep(selStep);
+                Model.Status = "warning";
+                Model.StatusMessage = "Deleted all cooking steps and ingredients for the empty recipe!";
+            }
         }
         public async void AddIngredient()
         {
-            await DB.SaveRecipe(Model.SelectedRecipe);
-            Model.Ingredient.RecipeID = Model.SelectedRecipe.ID;
+            Model.Ingredient.RecipeID = Model.SelectedRecipe.SKU;
             await DB.SaveRecipeIngredient(Model.Ingredient);
             Model.Status = "success";
             Model.StatusMessage = "Ingredient has been added successfully!";
@@ -198,8 +227,8 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             var allingredients = await DB.RecipeIngredients();
             var allsteps = await DB.CookingSteps();
             //Model.SelectedRecipe = (from row in allrecipes where row.ID == Model.SelectedRecipe.ID select row).FirstOrDefault();
-            Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.ID select row).ToList();
-            Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.ID select row).ToList();
+            Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.SKU select row).ToList();
+            Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.SKU select row).ToList();
             Model.Ingredient = new Models.RecipeIngredient();
             Model.IsNew = true;
             await InvokeAsync(StateHasChanged);//refresh rendered page
@@ -216,16 +245,15 @@ namespace SUAVVY_FusionHacks2.Components.Pages
                 await Task.Delay(1000);
                 var allingredients = await DB.RecipeIngredients();
                 var allsteps = await DB.CookingSteps();
-                Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.ID select row).ToList();
-                Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.ID select row).ToList();
+                Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.SKU select row).ToList();
+                Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.SKU select row).ToList();
                 await InvokeAsync(StateHasChanged);
 
             }
         }
         public async void AddCookingStep()
         {
-            await DB.SaveRecipe(Model.SelectedRecipe);
-            Model.Step.StepId = Model.SelectedRecipe.ID;
+            Model.Step.StepId = Model.SelectedRecipe.SKU;
             await DB.SaveCookingStep(Model.Step);
             Model.Status = "success";
             Model.StatusMessage = "Cooking step has been added successfully!";
@@ -234,8 +262,8 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             var allingredients = await DB.RecipeIngredients();
             var allsteps = await DB.CookingSteps();
             //Model.SelectedRecipe = (from row in allrecipes where row.ID == Model.SelectedRecipe.ID select row).FirstOrDefault();
-            Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.ID select row).ToList();
-            Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.ID select row).ToList();
+            Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.SKU select row).ToList();
+            Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.SKU select row).ToList();
             Model.Step = new Models.CookingStep();
             Model.IsNew = true;
             await InvokeAsync(StateHasChanged);//refresh rendered page
@@ -252,11 +280,12 @@ namespace SUAVVY_FusionHacks2.Components.Pages
                 await Task.Delay(1000);
                 var allingredients = await DB.RecipeIngredients();
                 var allsteps = await DB.CookingSteps();
-                Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.ID select row).ToList();
-                Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.ID select row).ToList();
+                Model.Ingredients = (from row in allingredients where row.RecipeID == Model.SelectedRecipe.SKU select row).ToList();
+                Model.CookingSteps = (from row in allsteps where row.StepId == Model.SelectedRecipe.SKU select row).ToList();
                 await InvokeAsync(StateHasChanged);
 
             }
         }
     }
 }
+

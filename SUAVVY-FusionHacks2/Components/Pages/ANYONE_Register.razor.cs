@@ -34,7 +34,7 @@ namespace SUAVVY_FusionHacks2.Components.Pages
         public UsersViewModel UserModel = new UsersViewModel();
         public async void RegisterUser()
         {
-            if(string.IsNullOrWhiteSpace(Model.Username) || string.IsNullOrWhiteSpace(Model.Password))
+            if (string.IsNullOrWhiteSpace(Model.Username) || string.IsNullOrWhiteSpace(Model.Password))
             {
                 Status = "danger";
                 StatusMessage = "Username/Password cannot be blank or only spaces!";
@@ -54,6 +54,18 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             {
                 UserModel.Status = "danger";
                 UserModel.StatusMessage = "User already exists!";
+            }
+            else if (Model.Username == "admin")
+            {
+                Model.IsDeleted = false;
+                Model.CreatedBy = "SYSTEM";
+                Model.ModifiedBy = "SYSTEM";
+                Model.CreatedDate = DateTime.Now;
+                Model.ModifiedDate = DateTime.Now;
+
+                await DB.SaveUser(Model);
+                Status = "success";
+                StatusMessage = "User changes has been saved successfully!";
             }
             else
             {

@@ -19,5 +19,7 @@ namespace SUAVVY_FusionHacks2.Models
         /// </summary>
         public Product SelectedProduct { get; set; } = new Product();
         public string LoadedPhoto { get; set; }
+        public string Search { get; set; }
+        public string LoadedPhotoPath { get; set; }
     }
 }

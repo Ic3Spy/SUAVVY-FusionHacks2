@@ -73,7 +73,6 @@ namespace SUAVVY_FusionHacks2.Shared
                         using Stream sourceStream = await photo.OpenReadAsync();
                         using FileStream localFileStream = File.OpenWrite(localFilePath);
                         await sourceStream.CopyToAsync(localFileStream); //finalize copy
-
                         resp = localFilePath;
                     }
                 }

@@ -12,7 +12,7 @@ namespace SUAVVY_FusionHacks2.Models
         [PrimaryKey, AutoIncrement, NotNull]
         public int ID { get; set; }
         [NotNull]
-        public int StepId { get; set; }
+        public string StepId { get; set; }
         [NotNull]
         public string StepDetails { get; set; }
     }

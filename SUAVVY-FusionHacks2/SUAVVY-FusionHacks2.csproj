@@ -22,7 +22,7 @@
         <Nullable>enable</Nullable>
 
         <!-- Display name -->
-        <ApplicationTitle>SUAVVY-FusionHacks2</ApplicationTitle>
+        <ApplicationTitle>SUAVVY</ApplicationTitle>
 
         <!-- App Identifier -->
         <ApplicationId>com.companyname.suavvyfusionhacks2</ApplicationId>
@@ -89,14 +89,15 @@
 	
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-
+        <!--<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" ForegroundScale="0.50" Color="#ffc107" />-->
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#00FF0000" ForegroundScale="0.50" BaseSize="64,64" />
+		<!--<MauiIcon Include="Resources\AppIcon\appicon2.png" Color="#ffc107"  />-->
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#FFFFFF" />
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*" />
-        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+        <!--<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />-->
 
         <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />
@@ -113,5 +114,10 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     </ItemGroup>
-
+	
+	<ItemGroup>
+		<Folder Include="Components\Shared\" />
+		<Folder Include="wwwroot\imgs\ads\" />
+	</ItemGroup>
+	
 </Project>

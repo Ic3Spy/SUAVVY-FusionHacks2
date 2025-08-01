@@ -1,5 +1,5 @@
 ﻿@page "/ADMIN_Products"
-<h3><i class="fa fa-dolly-flatbed"></i>&nbsp;Recipes</h3>
+<h3><i class="fa fa-dolly-flatbed"></i>&nbsp;Products</h3>
 @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
 {
     <div class="alert alert-@Model.Status">
@@ -73,7 +73,7 @@
             @foreach (var prod in Model.Products)
             {
                 <div class="col">
-                    <div class="card h-100">
+                    <div class="card h-100" @onclick="() => { LoadProduct(prod.ID); }">
                         <img src="@prod.ImageUrl" class="card-img-top" alt="@prod.Recipe" />
                         <div class="card-body text-center">
                             <h5 class="card-title">@prod.Recipe</h5>

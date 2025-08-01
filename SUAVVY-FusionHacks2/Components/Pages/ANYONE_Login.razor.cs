@@ -51,7 +51,7 @@ namespace SUAVVY_FusionHacks2.Components.Pages
                 if (targetUser != null)
                 {
                     Status = "success";
-                    StatusMessage = "User changes has been saved successfully!";
+                    StatusMessage = "Login successful!";
                     AppShell.CurrentUser = targetUser;
                     AppShell.IsUserLoggedIn = true;
                     AppShell.SetSessionUser(targetUser);

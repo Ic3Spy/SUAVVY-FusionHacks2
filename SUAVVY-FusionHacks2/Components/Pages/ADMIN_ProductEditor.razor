@@ -1,5 +1,75 @@
-﻿<h3>ADMIN_ProductEditor</h3>
-
-@code {
-
+﻿@page "/ADMIN_ProductEditor"
+<SectionContent SectionName="page-buttons">
+    <span>
+        <button class="btn text-warning" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        @if (!Model.IsNew)
+        {
+            <button class="btn text-danger" @onclick="()=>{ DeleteRecipe(Model.SelectedProduct.ID); }"><i class="fa fa-trash"></i></button>
+        }
+    </span>    
+</SectionContent>
+@if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+{
+    <div class="alert alert-@Model.Status">
+        <i class="fa fa-info-circle"></i>&nbsp;
+        @Model.StatusMessage
+    </div>
 }
+<div id="pneRecipeForm" class="pagedform">
+    <h2>
+        Product                    
+    </h2>
+    <div class="content">
+    @* <label class="form-label">ID:</label>
+        <input type="text" @bind="Model.SelectedRecipe.ID" disabled class="form-control"> *@
+        <fieldset class="hasText">
+            <legend>Recipe Photo:</legend>
+            <div class="photoBox" style="height:100px;display:inline-flex">
+                <img src="@Model.LoadedPhoto" style="height:100%" />
+                <button class="btn text-success" @onclick="(()=>{AddRecipePhoto(Model.SelectedProduct.ID);})"><i class="fa fa-edit"></i></button>
+                <button class="btn text-danger"><i class="fa fa-trash"></i></button>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Recipe:</legend>
+            <select @bind="Model.SelectedProduct.Recipe" class="form-control" title="Recipe">
+                <option>-Select Recipe-</option>
+                @foreach (var prod in RecipeModel.Recipes)
+                {
+                    <option>@prod.Name</option>
+                }
+            </select>
+        </fieldset>
+        <fieldset>
+            <legend>Description</legend>
+            <textarea @bind="Model.SelectedProduct.Description" class="form-control" placeholder="ex. A delicious pizza with fresh ingredients..." title="Set a description for a product"></textarea>
+        </fieldset>
+        <fieldset>
+            <legend>Category:</legend>
+            <select @bind="Model.SelectedProduct.Category" class="form-control" title="Category">
+                <option>Please select category</option>
+                <option>Hamburgers</option>
+                <option>Pizza</option>
+                <option>Hotdogs</option>
+                <option>Cookies</option>
+                <option>IceCream</option>
+                <option>Others</option>
+            </select>
+        </fieldset>
+        <fieldset class="hasText">
+            <legend>Price:</legend>
+            <input type="number" @bind="Model.SelectedProduct.Price" step="0.1" placeholder="ex. 100.00" title="Set a price for a product" class="form-control ">
+        </fieldset>
+        <fieldset>
+            <label class="form-control" for="chkIsActive" title="Is Active"><input id="chkIsActive" type="checkbox" @bind="Model.SelectedProduct.IsActive" />&nbsp;Is Active</label>
+        </fieldset>
+    </div>
+    <div style="text-align:center">
+        <button class="btn btn-success bigsavebutton" @onclick="SaveProduct" >
+            <i class="fa fa-save"></i>&nbsp;
+            Save
+        </button>
+    </div>
+</div>

@@ -15,7 +15,7 @@ namespace SUAVVY_FusionHacks2.Models
         public int ID { get; set; }
 
         [NotNull]
-        public int RecipeID { get; set; }
+        public string RecipeID { get; set; }
 
         [NotNull]
         public string Name { get; set; }

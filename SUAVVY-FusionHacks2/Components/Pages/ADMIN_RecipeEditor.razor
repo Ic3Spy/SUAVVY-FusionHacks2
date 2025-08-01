@@ -1,14 +1,14 @@
 ﻿@page "/ADMIN_RecipeEditor"
 <SectionContent SectionName="page-buttons">
     <span>
-        <button class="btn text-warning" onclick="history.back()">
+        <button class="btn text-warning" @onclick="() => {ReturnToRecipes(Model.SelectedRecipe.ID);}">
             <i class="fas fa-arrow-left"></i>
         </button>
         @if (!Model.IsNew)
         {
-            <button class="btn text-danger" @onclick="()=>{ DeleteRecipe(Model.SelectedRecipe.ID); }"><i class="fa fa-trash"></i></button>
+            <button class="btn text-danger" @onclick="() => { DeleteRecipe(Model.SelectedRecipe.ID); }"><i class="fa fa-trash"></i></button>
         }
-    </span>    
+    </span>
 </SectionContent>
 @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
 {
@@ -19,16 +19,16 @@
 }
 <div id="pneRecipeForm" class="pagedform">
     <h2>
-        Recipe                    
+        Recipe
     </h2>
     <div class="content">
-    @* <label class="form-label">ID:</label>
+        @* <label class="form-label">ID:</label>
         <input type="text" @bind="Model.SelectedRecipe.ID" disabled class="form-control"> *@
         <fieldset class="hasText">
             <legend>Recipe Photo:</legend>
             <div class="photoBox" style="height:100px;display:inline-flex">
                 <img src="@Model.LoadedPhoto" style="height:100%" />
-                <button class="btn text-success" @onclick="(()=>{AddRecipePhoto(Model.SelectedRecipe.ID);})"><i class="fa fa-edit"></i></button>
+                <button class="btn text-success" @onclick="(() => { AddRecipePhoto(Model.SelectedRecipe.ID); })"><i class="fa fa-edit"></i></button>
                 <button class="btn text-danger"><i class="fa fa-trash"></i></button>
             </div>
         </fieldset>
@@ -52,7 +52,7 @@
         <fieldset class="hasText">
             <legend>Description:</legend>
             <textarea @bind="Model.SelectedRecipe.Description" title="Description" placeholder="Description" class="form-control"></textarea>
-        </fieldset>    
+        </fieldset>
         <fieldset class="hasText">
             <legend>Ingredients:</legend>
             <div class="editable-list">
@@ -63,7 +63,7 @@
                             <span class="el-recipe-ingredient-amount">@item.Amount</span>
                             <span class="el-recipe-ingredient-unit">@item.Unit</span>
                             <span class="el-recipe-ingredient-name">@item.Name</span>
-                            <button class="btn text-danger" @onclick="(()=>{DeleteIngredient(item.ID);})"><i class="fa fa-trash"></i></button>
+                            <button class="btn text-danger" @onclick="(() => { DeleteIngredient(item.ID); })"><i class="fa fa-trash"></i></button>
                         </li>
                     }
                 </ul>
@@ -86,7 +86,7 @@
                             </select>
                         </td>
                         <td colspan="1" rowspan="2">
-                            <button class="btn btn-success" style=" height: 100%; width: 50px; margin: 5px; padding: 25px 6px; font-size: 30px; " @onclick="()=>{ AddIngredient(); }"><i class="fa fa-plus"></i></button>
+                            <button class="btn btn-success" style=" height: 100%; width: 50px; margin: 5px; padding: 25px 6px; font-size: 30px; " @onclick="() => { AddIngredient(); }"><i class="fa fa-plus"></i></button>
                         </td>
                     </tr>
                     <tr>
@@ -108,10 +108,8 @@
                     @foreach (var item in Model.CookingSteps)
                     {
                         <li class="el-recipe-cooking-step">
-                            <p>
-                                @item.StepDetails
-                            </p>
-                            <button class="btn text-danger" @onclick="(()=>{DeleteCookingStep(item.ID);})"><i class="fa fa-trash"></i></button>
+                            <span>@item.StepDetails</span>
+                            <button class="btn text-danger" @onclick="(() => { DeleteCookingStep(item.ID); })"><i class="fa fa-trash"></i></button>
                         </li>
                     }
 
@@ -128,7 +126,7 @@
         </fieldset>
     </div>
     <div style="text-align:center">
-        <button class="btn btn-success bigsavebutton" @onclick="SaveRecipe" >
+        <button class="btn btn-success bigsavebutton" @onclick="SaveRecipe">
             <i class="fa fa-save"></i>&nbsp;
             Save
         </button>

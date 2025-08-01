@@ -1,56 +1,87 @@
 ﻿@page "/USERS_Dashboard"
 @using SUAVVY_FusionHacks2.Data
 
-<SectionContent SectionName="page-buttons">    
-     <h1>Hello, @AppShell.CurrentUser.FirstName @AppShell.CurrentUser.LastName</h1>
-    <div class="search">
-        <div id="searchBox" class="input-group header-search" style="">
-            <span class="input-group-text text-warning"><i class="fa fa-search"></i></span>
-            <input id="txtSearch" type="text" class="form-control" placeholder="Search for Recipes" value="@Model.Search" @onchange="SearchTerm" />            
-        </div>
+<SectionContent SectionName="page-buttons">
+    <div id="searchBox" class="input-group header-search" style="display:none;">
+        <span class="input-group-text text-warning"><i class="fa fa-search"></i></span>
+        <input id="txtSearch" type="text" class="form-control" placeholder="Search" value="@Model.Search" @onchange="SearchTerm" />
+        <span class="input-group-text" onclick="hideSearchBox()"><i class="fa fa-times"></i></span>
     </div>
+    <span id="controlBox">
+        <CartButton />
+        <button class="btn text-warning" onclick="showSearchBox()">
+            <i class="fa fa-search"></i>
+        </button>
+    </span>    
 </SectionContent>
 <section>
-    <div class=" grouping-menu">
-        <a href="/catalog?category=homemade" style="background-image:url('/imgs/groups/homemade.png')">
-            <span>Homemade Cuisine</span>
+    <h1>Find your cravings</h1>
+    <div class="smallmenulist">
+        <a class="btn text-danger" href="/USERS_Products?category=Hamburgers">
+            <i class="fa fa-hamburger"></i>
         </a>
-        <a href="/catalog?category=vegie" style="background-image:url('/imgs/groups/vegetarian.png')">
-            <span>Vegietarian</span>
+        <a class="btn text-warning" href="/USERS_Products?category=Pizza">
+            <i class="fa fa-pizza-slice"></i>
         </a>
-        <a href="/catalog?category=meat" style="background-image:url('/imgs/groups/meat.png')">
-            <span>All Meat</span>
+        <a class="btn text-danger" href="/USERS_Products?category=Hotdogs">
+            <i class="fa fa-hotdog"></i>
         </a>
-        <a href="/catalog?category=seafood" style="background-image:url('/imgs/groups/seafood.png')">
-            <span>Seafood</span>
+        <a class="btn text-warning" href="/USERS_Products?category=Cookies">
+            <i class="fa fa-cookie-bite"></i>
         </a>
-        <a href="/catalog?category=soup" style="background-image:url('/imgs/groups/soup.png')">
-            <span>Soups</span>
+        <a class="btn text-danger" href="/USERS_Products?category=IceCream">
+            <i class="fa fa-ice-cream"></i>
         </a>
-    </div> 
-</section>
-<section>
-    <h2>Recommended</h2>
-    <div class="portrait-bigmenu">
-        <a class="portrait-bigmenu-item" href="recipeview">
-            <div class="cover-photo" style="background-image:url('/imgs/recommended/1.jpg')"></div>
-            <h3>Menudo</h3>
-            <p>10 Ingredients | 50mins</p>
-        </a>
-        <a class="portrait-bigmenu-item" href="recipeview">
-            <div class="cover-photo" style="background-image:url('/imgs/recommended/2.jpg')"></div>
-            <h3>Papaitan</h3>
-            <p>8 Ingredients | 45mins</p>
-        </a>
-        <a class="portrait-bigmenu-item" href="recipeview">
-            <div class="cover-photo" style="background-image:url('/imgs/recommended/3.jpg')"></div>
-            <h3>Bolognese</h3>
-            <p>5 Ingredients | 45mins</p>
+        <a class="btn text-primary" href="/USERS_Products?category=All">
+            <i class="fa fa-ellipsis-h"></i>
         </a>
     </div>
 </section>
-
+<section>
+    <h2>Popular Food</h2>
+    <div class="portrait-menulist">
+        @foreach(var itm in Model.Popular)
+        {
+            <div class="menuitem">
+                <div class="menuitem-img"><img src="/ProductPhotos/@(itm.ID).jpg" /></div>
+                <h3>@itm.Recipe</h3>
+                <h4>P@(itm.Price)</h4>
+                <div class="menuitem-actions">
+                    <a class="menuitem-add" href="/productitem?productid=@itm.ID">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+<section>
+    <h2>Top of the Week</h2>
+    <div class="landscape-menulist">
+        @foreach (var itm in Model.Popular)
+        {
+            <div class="menuitem">
+                <img src="/ProductPhotos/@(itm.ID).jpg" />
+                <h3>@itm.Recipe</h3>
+                <h5>@itm.Description</h5>
+                <h4>P@(itm.Price)</h4>
+                <div class="menuitem-actions">
+                    <a class="menuitem-add" href="/productitem?productid=@itm.ID">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+<script src="js/jquery.cycle2.js"></script>
 <script>
-
-
+    function showSearchBox(){
+        $('#searchBox').show();    
+        $('#controlBox').hide();
+    }
+    function hideSearchBox(){
+        $('#searchBox').hide();
+        $('#controlBox').show();
+    }
 </script>

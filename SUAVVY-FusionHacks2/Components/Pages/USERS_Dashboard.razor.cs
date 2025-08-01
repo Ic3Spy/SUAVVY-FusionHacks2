@@ -36,7 +36,15 @@ namespace SUAVVY_FusionHacks2.Components.Pages
                 AppShell.CurrentUser = loggedUser;
                 AppShell.IsUserLoggedIn = true;
             }
-            //AppShell.IsUserLoggedIn = true;
+
+            //temporary load up since we have to get a random list of items
+            var allproducts = await DB.Products();
+
+            allproducts.Shuffle<Product>();//Shuffle Order
+            Model.Popular = (from row in allproducts where row.IsActive select row).Take(5).ToList();
+
+            allproducts.Shuffle<Product>();//Shuffle Order
+            Model.TopWeek = (from row in allproducts where row.IsActive orderby row.ID ascending select row).Take(5).ToList();
 
             await InvokeAsync(StateHasChanged);
         }
@@ -48,7 +56,7 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             string searchTerm = e.Value.ToString().ToLower();
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                Nav.NavigateTo("/catalog?lookingfor=" + searchTerm);
+                Nav.NavigateTo("/USERS_Products?lookingfor=" + searchTerm);
             }
             await InvokeAsync(StateHasChanged);//refresh rendered page
         }

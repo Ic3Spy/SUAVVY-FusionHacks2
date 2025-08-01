@@ -1,2 +1,62 @@
-﻿<h3>ADMIN_Dashboard</h3>
+﻿@page "/ADMIN_Dashboard"
+@using SUAVVY_FusionHacks2.Data
 
+<style>
+    html, body {
+        margin: 0;
+        overflow-x: hidden
+    }
+</style>
+<SectionContent SectionName="page-buttons">
+    
+</SectionContent>
+<section>
+    <div class="search">
+        <div id="searchBox" class="input-group header-search" style="">
+            <span class="input-group-text text-warning"><i class="fa fa-search"></i></span>
+            <input id="txtSearch" type="text" class="form-control" placeholder="Search for Recipes" value="@Model.Search" @onchange="SearchTerm" />
+        </div>
+    </div>
+    <div class=" grouping-menu">
+        <a href="/catalog?category=homemade" style="background-image:url('/imgs/groups/homemade.png')">
+            <span>Orders</span>
+        </a>
+        <a href="/catalog?category=vegie" style="background-image:url('/imgs/groups/vegetarian.png')">
+            <span>Sales</span>
+        </a>
+        <a href="/catalog?category=meat" style="background-image:url('/imgs/groups/meat.png')">
+            <span>Users</span>
+        </a>
+        <a href="/catalog?category=seafood" style="background-image:url('/imgs/groups/seafood.png')">
+            <span>Products</span>
+        </a>
+        <a href="/catalog?category=soup" style="background-image:url('/imgs/groups/soup.png')">
+            <span>Recipes</span>
+        </a>
+    </div>
+</section>
+<section>
+    <h2>Recommended</h2>
+    <div class="portrait-bigmenu">
+        <a class="portrait-bigmenu-item" href="recipeview">
+            <div class="cover-photo" style="background-image:url('/imgs/recommended/1.jpg')"></div>
+            <h3>Menudo</h3>
+            <p>10 Ingredients | 50mins</p>
+        </a>
+        <a class="portrait-bigmenu-item" href="recipeview">
+            <div class="cover-photo" style="background-image:url('/imgs/recommended/2.jpg')"></div>
+            <h3>Papaitan</h3>
+            <p>8 Ingredients | 45mins</p>
+        </a>
+        <a class="portrait-bigmenu-item" href="recipeview">
+            <div class="cover-photo" style="background-image:url('/imgs/recommended/3.jpg')"></div>
+            <h3>Bolognese</h3>
+            <p>5 Ingredients | 45mins</p>
+        </a>
+    </div>
+</section>
+
+<script>
+
+
+</script>

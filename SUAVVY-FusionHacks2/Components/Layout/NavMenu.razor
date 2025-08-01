@@ -29,24 +29,68 @@
     <hr />
     @if (AppShell.IsUserLoggedIn)
     {
-        <ul>
-            <!--Admin Pages Here-->
-            <li>
-                <a class="nav-link" href="products">
-                    <i class="fa fa-dolly-flatbed"></i>&nbsp;Groupings
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="recipes">
-                    <i class="fa fa-cash-register"></i>&nbsp;Recipes
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="users">
-                    <i class="fa fa-users"></i>&nbsp;Users
-                </a>
-            </li>
-        </ul>
+        if(AppShell.CurrentUser.Username == "admin")
+        {
+            <ul>
+                <!--Admin Pages Here-->
+                <li>
+                    <a class="nav-link" href="ADMIN_Dashboard">
+                        <i class="fa fa-home"></i>&nbsp;Home
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="ADMIN_Products">
+                        <i class="fa fa-shopping-bag"></i>&nbsp;Products
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="ADMIN_Recipes">
+                        <i class="fa fa-cash-register"></i>&nbsp;Recipes
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="ADMIN_Users">
+                        <i class="fa fa-users"></i>&nbsp;Users
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="ADMIN_Orders">
+                        <i class="fa fa-truck"></i>&nbsp;Orders
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="ADMIN_Sales">
+                        <i class="fa fa-bar-chart"></i>&nbsp;Sales
+                    </a>
+                </li>
+            </ul>
+        }
+        else
+        {
+            <ul>
+                <!--Admin Pages Here-->
+                <li>
+                    <a class="nav-link" href="USERS_Dashboard">
+                        <i class="fa fa-home"></i>&nbsp;Home
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="USERS_Products">
+                        <i class="fa fa-shopping-bag"></i>&nbsp;Products
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="USERS_Cart">
+                        <i class="fa fa-dolly-flatbed"></i>&nbsp;Cart
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="USERS_PurchaseHistory">
+                        <i class="fa fa-clock-o"></i>&nbsp;History
+                    </a>
+                </li>
+            </ul>
+        }
     }
     else
     {

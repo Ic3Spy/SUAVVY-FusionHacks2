@@ -69,29 +69,6 @@ namespace SUAVVY_FusionHacks2.Components.Pages
             Nav.NavigateTo("/ADMIN_RecipeEditor");
         }
 
-        public string GetIconFromCategory(string cat)
-        {
-            string resp = "";
-            switch (cat)
-            {
-                case "Hamburgers":
-                    resp = "fa-hamburger";
-                    break;
-                case "Pizza":
-                    resp = "fa-pizza-slice";
-                    break;
-                case "Hotdogs":
-                    resp = "fa-hotdog";
-                    break;
-                case "Cookies":
-                    resp = "fa-cookie-bite";
-                    break;
-                case "IceCream":
-                    resp = "fa-ice-cream";
-                    break;
-            }
-            return resp;
-        }
         public async void SearchTerm(ChangeEventArgs e)
         {
             var items = await GetRecipes();
@@ -112,6 +89,7 @@ namespace SUAVVY_FusionHacks2.Components.Pages
 
             await InvokeAsync(StateHasChanged);//refresh rendered page
         }
+
         public async void ShowList()
         {
             Model.IsGrid = false;

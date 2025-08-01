@@ -156,5 +156,50 @@ namespace SUAVVY_FusionHacks2.Data
             return await database.DeleteAsync(incoming);
         }
         #endregion
+        #region Cart
+        public async Task<List<Cart>> Carts()
+        {
+            await Init();
+            return await database.Table<Cart>().ToListAsync();
+        }
+
+        public async Task<int> SaveCart(Cart incoming)
+        {
+            await Init();
+            if (incoming.ID != 0)
+                return await database.UpdateAsync(incoming);//update existing
+            else
+                return await database.InsertAsync(incoming);//insert new
+        }
+
+        public async Task<int> DeleteCart(Cart incoming)
+        {
+            await Init();
+            return await database.DeleteAsync(incoming);
+        }
+        #endregion
+        #region CartItem
+        public async Task<List<CartItem>> CartItems()
+        {
+            await Init();
+            return await database.Table<CartItem>().ToListAsync();
+        }
+
+        public async Task<int> SaveCartItem(CartItem incoming)
+        {
+            await Init();
+            if (incoming.ID != 0)
+                return await database.UpdateAsync(incoming);//update existing
+            else
+                return await database.InsertAsync(incoming);//insert new
+        }
+
+        public async Task<int> DeleteCartItem(CartItem incoming)
+        {
+            await Init();
+            return await database.DeleteAsync(incoming);
+        }
+        #endregion
     }
+
 }

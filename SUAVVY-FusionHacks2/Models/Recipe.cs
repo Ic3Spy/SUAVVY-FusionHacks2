@@ -18,6 +18,9 @@ namespace SUAVVY_FusionHacks2.Models
         public int UserID { get; set; }
 
         [NotNull]
+        public string SKU { get; set; }
+
+        [NotNull]
         public string Name { get; set; }
 
         [NotNull]

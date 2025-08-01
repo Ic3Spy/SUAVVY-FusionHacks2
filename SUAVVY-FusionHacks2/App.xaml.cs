@@ -1,6 +1,8 @@
-﻿namespace SUAVVY_FusionHacks2
+﻿using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
+
+namespace SUAVVY_FusionHacks2
 {
-    public partial class App : Application
+    public partial class App : Microsoft.Maui.Controls.Application
     {
         public App()
         {

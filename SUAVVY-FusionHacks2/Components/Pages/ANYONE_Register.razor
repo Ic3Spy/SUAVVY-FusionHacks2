@@ -6,25 +6,35 @@
             {
                 <div class="alert alert-@Status">
                     <i class="fa fa-info-circle"></i>&nbsp;
-                    @StatusMessage
+                    @StatusMessage  
                 </div>
             }
-            <fieldset>
-                <legend>Username:</legend>
-                <input class="form-control" type="text" @bind="Model.Username" placeholder="Username" title="Username" />
-            </fieldset>
-            <fieldset>
-                <legend>Password:</legend>
-                <input class="form-control" type="password" @bind="Model.Password" placeholder="Password" title="Password" />
-            </fieldset>
-            <fieldset>
-                <legend>First Name:</legend>
-                <input class="form-control" type="text" @bind="Model.FirstName" placeholder="First Name" title="First Name" />
-            </fieldset>
-            <fieldset>
-                <legend>Last Name:</legend>
-                <input class="form-control" type="text" @bind="Model.LastName" placeholder="Last Name" title="Last Name" />
-            </fieldset>
+            <div style="margin-bottom: 10px;">
+                <h1 class="text-center"><i class="fa fa-user"></i>&nbsp;Register</h1>
+                <p class="text-center">Register to your account at SUAVVY.</p>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <fieldset>
+                        <legend>Username:</legend>
+                        <input class="form-control" type="text" @bind="Model.Username" placeholder="Username" title="Username" />
+                    </fieldset>
+                    <fieldset>
+                        <legend>Password:</legend>
+                        <input class="form-control" type="password" @bind="Model.Password" placeholder="Password" title="Password" />
+                    </fieldset>
+                </div>
+                <div class="col-6">
+                    <fieldset>
+                        <legend>First Name:</legend>
+                        <input class="form-control" type="text" @bind="Model.FirstName" placeholder="First Name" title="First Name" />
+                    </fieldset>
+                    <fieldset>
+                        <legend>Last Name:</legend>
+                        <input class="form-control" type="text" @bind="Model.LastName" placeholder="Last Name" title="Last Name" />
+                    </fieldset>
+                </div>
+            </div>
             <fieldset>
                 <legend>Mobile:</legend>
                 <input class="form-control" type="text" @bind="Model.MobileNumber" placeholder="Mobile" title="Mobile" />
