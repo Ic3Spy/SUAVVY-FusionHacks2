@@ -1,5 +1,5 @@
-<h1>SUAVVY</h1>
-<h3>Entry project for FusionHacks2</h3>
+<h1>SUAVVY [A FusionHacks2 Entry]</h1>
+
 <h4>A Recipe/Ordering app for small businesses</h4>
 This app will help small businesses (such as karenderyas/small cafés) to manage their food for customers. This app demonstrates the process of setting up recipes that can be cook and sold.
 
